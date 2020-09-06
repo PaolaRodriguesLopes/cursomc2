@@ -1,5 +1,11 @@
 package com.example.cursomc2.resources;
 
+import com.example.cursomc2.domain.Categoria;
+import com.example.cursomc2.services.CategoriaService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,10 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public String listar ()
+	@Autowired
+	private CategoriaService service;
+
+	@RequestMapping(value="/{id}",method=RequestMethod.GET)
+	public ResponseEntity<?> find (@PathVariable Integer id)
 	{
-		
-		return "Hello world REST esta funcionando";
+		Categoria obj = service.buscar(id);
+		return ResponseEntity.ok().body(obj);
 	}
 }
